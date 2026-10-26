@@ -5588,69 +5588,62 @@
     </aside>
 
     <script>
-        var GOOGLE_FORM_URL = "https://script.google.com/macros/s/AKfycbyHBsODpw6zIYVAnQgUBPyGy3BeAun_2k_z0AlFh9AeXcg7kWz8-OUhraccnsu_4GwiBw/exec";
-        var GOOGLE_FORM_VIEW_URL = "https://script.google.com/macros/s/AKfycbyHBsODpw6zIYVAnQgUBPyGy3BeAun_2k_z0AlFh9AeXcg7kWz8-OUhraccnsu_4GwiBw/exec";
-        var GOOGLE_FORM_EDIT_URL = "https://script.google.com/macros/s/AKfycbyHBsODpw6zIYVAnQgUBPyGy3BeAun_2k_z0AlFh9AeXcg7kWz8-OUhraccnsu_4GwiBw/exec";
+        var GOOGLE_FORM_URL = "https://script.google.com/macros/s/AKfycbyMeCJeTpaEURi-KzwTsKwYM7dYyhw0otLVcfLemncVV8iwWYAfLtSw9qgAidpvHb1F/exec";
+        var GOOGLE_FORM_VIEW_URL = "https://script.google.com/macros/s/AKfycbyMeCJeTpaEURi-KzwTsKwYM7dYyhw0otLVcfLemncVV8iwWYAfLtSw9qgAidpvHb1F/exec";
+        var GOOGLE_FORM_EDIT_URL = "https://script.google.com/macros/s/AKfycbyMeCJeTpaEURi-KzwTsKwYM7dYyhw0otLVcfLemncVV8iwWYAfLtSw9qgAidpvHb1F/exec";
 
         // Vercel / External Host Compatibility: Proxy Shim untuk google.script.run
+        // Menggunakan GET request karena GAS Web App redirect 302 menghilangkan POST body
         if (typeof google === 'undefined' || !google.script || !google.script.run) {
             window.google = window.google || {};
             window.google.script = window.google.script || {};
             window.google.script.run = new Proxy({}, {
                 get: function(target, propKey) {
+                    if (propKey === 'then' || propKey === 'toJSON' || typeof propKey === 'symbol') return undefined;
+
                     var successCallback = function() {};
                     var failureCallback = function(err) { console.error("GAS RPC Error:", err); };
 
-                    var chain = {
-                        withSuccessHandler: function(fn) {
-                            successCallback = fn;
-                            return chain;
-                        },
-                        withFailureHandler: function(fn) {
-                            failureCallback = fn;
-                            return chain;
-                        }
-                    };
+                    var callGAS = function() {
+                        var args = Array.prototype.slice.call(arguments);
+                        var getUrl = GOOGLE_FORM_URL
+                            + "?action=" + encodeURIComponent(propKey)
+                            + "&params=" + encodeURIComponent(JSON.stringify(args));
 
-                    return new Proxy(function() {}, {
-                        get: function(t, method) {
-                            if (method === 'withSuccessHandler' || method === 'withFailureHandler') {
-                                return chain[method];
-                            }
-                            return chain;
-                        },
-                        apply: function(t, thisArg, argumentsList) {
-                            var args = Array.prototype.slice.call(argumentsList);
-                            fetch(GOOGLE_FORM_URL, {
-                                method: 'POST',
-                                mode: 'cors',
-                                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                                body: JSON.stringify({ action: propKey, params: args })
-                            })
-                            .then(function(res) {
-                                return res.text();
-                            })
+                        console.log("[GAS Shim] Calling:", propKey, "args:", args);
+
+                        fetch(getUrl, { redirect: 'follow' })
+                            .then(function(res) { return res.text(); })
                             .then(function(text) {
                                 try {
                                     var data = JSON.parse(text);
+                                    console.log("[GAS Shim] Success:", propKey, data);
                                     if (data && data.status === 'error') {
-                                        failureCallback(new Error(data.message || 'Unknown error'));
+                                        failureCallback(new Error(data.message || 'Unknown GAS error'));
                                     } else {
                                         successCallback(data);
                                     }
-                                } catch(e) {
-                                    console.warn("GAS POST response non-JSON, mencoba GET fallback...");
-                                    var getUrl = GOOGLE_FORM_URL + "?action=" + encodeURIComponent(propKey) + "&params=" + encodeURIComponent(JSON.stringify(args));
-                                    return fetch(getUrl).then(function(r) { return r.json(); }).then(function(json) {
-                                        successCallback(json);
-                                    });
+                                } catch(parseErr) {
+                                    console.error("[GAS Shim] Response bukan JSON:", text.slice(0, 200));
+                                    failureCallback(new Error("Response GAS bukan JSON. Pastikan doGet sudah di-deploy ulang."));
                                 }
                             })
                             .catch(function(err) {
+                                console.error("[GAS Shim] Fetch error:", err);
                                 failureCallback(err);
                             });
-                        }
-                    });
+                    };
+
+                    callGAS.withSuccessHandler = function(fn) {
+                        successCallback = fn;
+                        return callGAS;
+                    };
+                    callGAS.withFailureHandler = function(fn) {
+                        failureCallback = fn;
+                        return callGAS;
+                    };
+
+                    return callGAS;
                 }
             });
         }
