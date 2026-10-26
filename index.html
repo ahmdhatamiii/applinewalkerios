@@ -5588,59 +5588,65 @@
     </aside>
 
     <script>
-        var GOOGLE_FORM_URL = "https://script.google.com/macros/s/AKfycbwDSnMqpHCO3Yg_YHjizrx_588KKXFFEbZAuY7tprarOE_f0HhlnkdZbRRZEkdr4dE0/exec";
-        var GOOGLE_FORM_VIEW_URL = "https://script.google.com/macros/s/AKfycbwDSnMqpHCO3Yg_YHjizrx_588KKXFFEbZAuY7tprarOE_f0HhlnkdZbRRZEkdr4dE0/exec";
-        var GOOGLE_FORM_EDIT_URL = "https://script.google.com/macros/s/AKfycbwDSnMqpHCO3Yg_YHjizrx_588KKXFFEbZAuY7tprarOE_f0HhlnkdZbRRZEkdr4dE0/exec";
+        var GAS_PROXY_URL = "/api/gas";
 
         // Vercel / External Host Compatibility: Proxy Shim untuk google.script.run
         // Request dikirim ke /api/gas (Vercel serverless proxy) untuk menghindari CORS
         if (typeof google === 'undefined' || !google.script || !google.script.run) {
             window.google = window.google || {};
             window.google.script = window.google.script || {};
-            window.google.script.run = new Proxy({}, {
-                get: function(target, propKey) {
-                    if (propKey === 'then' || propKey === 'toJSON' || typeof propKey === 'symbol') return undefined;
 
-                    var successCallback = function() {};
-                    var failureCallback = function(err) { console.error("GAS RPC Error:", err); };
+            function createGasRunner(successHandler, failureHandler, userObj) {
+                var runner = {
+                    withSuccessHandler: function(fn) {
+                        return createGasRunner(fn, failureHandler, userObj);
+                    },
+                    withFailureHandler: function(fn) {
+                        return createGasRunner(successHandler, fn, userObj);
+                    },
+                    withUserObject: function(obj) {
+                        return createGasRunner(successHandler, failureHandler, obj);
+                    }
+                };
 
-                    var callGAS = function() {
-                        var args = Array.prototype.slice.call(arguments);
-                        // Panggil Vercel API proxy, bukan GAS langsung
-                        var proxyUrl = "/api/gas"
-                            + "?action=" + encodeURIComponent(propKey)
-                            + "&params=" + encodeURIComponent(JSON.stringify(args));
+                return new Proxy(runner, {
+                    get: function(target, propKey) {
+                        if (propKey in target) return target[propKey];
+                        if (propKey === 'then' || propKey === 'toJSON' || typeof propKey === 'symbol') return undefined;
 
-                        console.log("[GAS Shim] Calling via proxy:", propKey, "args:", args);
+                        return function() {
+                            var args = Array.prototype.slice.call(arguments);
+                            var url = GAS_PROXY_URL
+                                + "?action=" + encodeURIComponent(propKey)
+                                + "&params=" + encodeURIComponent(JSON.stringify(args));
 
-                        fetch(proxyUrl)
-                            .then(function(res) { return res.json(); })
+                            fetch(url, {
+                                method: "GET",
+                                headers: { "Accept": "application/json" }
+                            })
+                            .then(function(res) {
+                                if (!res.ok) throw new Error("HTTP " + res.status);
+                                return res.json();
+                            })
                             .then(function(data) {
-                                console.log("[GAS Shim] Response:", propKey, data);
                                 if (data && data.status === 'error') {
-                                    failureCallback(new Error(data.message || 'Unknown GAS error'));
+                                    var err = new Error(data.message || 'Unknown GAS error');
+                                    if (failureHandler) failureHandler(err, userObj);
+                                    else console.error("[GAS Shim] Error:", err);
                                 } else {
-                                    successCallback(data);
+                                    if (successHandler) successHandler(data, userObj);
                                 }
                             })
                             .catch(function(err) {
-                                console.error("[GAS Shim] Fetch error:", err);
-                                failureCallback(err);
+                                console.error("[GAS Shim] RPC failure for " + propKey + ":", err);
+                                if (failureHandler) failureHandler(err, userObj);
                             });
-                    };
+                        };
+                    }
+                });
+            }
 
-                    callGAS.withSuccessHandler = function(fn) {
-                        successCallback = fn;
-                        return callGAS;
-                    };
-                    callGAS.withFailureHandler = function(fn) {
-                        failureCallback = fn;
-                        return callGAS;
-                    };
-
-                    return callGAS;
-                }
-            });
+            window.google.script.run = createGasRunner();
         }
 
 
@@ -14513,9 +14519,9 @@
                     name: "Line Walker UPT Semarang - Management System",
                     short_name: "LineWalker",
                     description: "Sistem Manajemen Line Walker, SPKL, Berita Acara, Presensi & Surat Peringatan UPT Semarang",
-                    start_url: window.location.href,
-                    id: "/",
-                    scope: "/",
+                    start_url: window.location.origin + "/",
+                    id: window.location.origin + "/",
+                    scope: window.location.origin + "/",
                     display: "standalone",
                     display_override: ["standalone", "minimal-ui", "window-controls-overlay"],
                     orientation: "portrait-primary",
