@@ -5620,21 +5620,30 @@
                             return chain;
                         },
                         apply: function(t, thisArg, argumentsList) {
+                            var args = Array.prototype.slice.call(argumentsList);
                             fetch(GOOGLE_FORM_URL, {
                                 method: 'POST',
                                 mode: 'cors',
                                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                                body: JSON.stringify({
-                                    action: propKey,
-                                    params: Array.prototype.slice.call(argumentsList)
-                                })
+                                body: JSON.stringify({ action: propKey, params: args })
                             })
-                            .then(function(res) { return res.json(); })
-                            .then(function(data) {
-                                if (data && data.status === 'error') {
-                                    failureCallback(new Error(data.message || 'Unknown error'));
-                                } else {
-                                    successCallback(data);
+                            .then(function(res) {
+                                return res.text();
+                            })
+                            .then(function(text) {
+                                try {
+                                    var data = JSON.parse(text);
+                                    if (data && data.status === 'error') {
+                                        failureCallback(new Error(data.message || 'Unknown error'));
+                                    } else {
+                                        successCallback(data);
+                                    }
+                                } catch(e) {
+                                    console.warn("GAS POST response non-JSON, mencoba GET fallback...");
+                                    var getUrl = GOOGLE_FORM_URL + "?action=" + encodeURIComponent(propKey) + "&params=" + encodeURIComponent(JSON.stringify(args));
+                                    return fetch(getUrl).then(function(r) { return r.json(); }).then(function(json) {
+                                        successCallback(json);
+                                    });
                                 }
                             })
                             .catch(function(err) {
