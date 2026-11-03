@@ -1478,8 +1478,8 @@
                     <select id="dashboard-acuan-filter-status" onchange="renderDashboardAcuanTable(1)"
                         class="bg-slate-50 text-xs text-slate-800 border border-slate-200 rounded-xl px-3 py-2 font-bold focus:outline-none">
                         <option value="ALL">Semua Status BA</option>
-                        <option value="BELUM">Belum Backup</option>
-                        <option value="SUDAH">Sudah Backup</option>
+                        <option value="BELUM">Belum BA</option>
+                        <option value="SUDAH">Sudah BA</option>
                     </select>
                 </div>
 
@@ -6798,7 +6798,8 @@
             var stFilter = document.getElementById('dashboard-acuan-filter-status').value;
 
             var filtered = rawDashboardAcuanList.filter(function (item) {
-                var matchSearch = (item.jenisBA + " " + item.nama + " " + item.tanggal + " " + item.bulan).toLowerCase().indexOf(q) !== -1;
+                var searchTarget = ((item.jenisBA || '') + " " + (item.nama || '') + " " + (item.tanggal || '') + " " + (item.bulan || '')).toLowerCase();
+                var matchSearch = searchTarget.indexOf(q) !== -1;
                 var matchStatus = true;
                 if (stFilter === 'BELUM') matchStatus = !item.isBackedUp;
                 if (stFilter === 'SUDAH') matchStatus = !!item.isBackedUp;
@@ -6812,22 +6813,27 @@
             var container = document.getElementById('dashboard-acuan-container');
             if (container) {
                 container.innerHTML = '';
+                if (pageData.length === 0) {
+                    container.innerHTML = '<div class="p-4 text-center text-slate-400 text-xs font-semibold">Tidak ada data acuan kendala yang cocok.</div>';
+                }
                 pageData.forEach(function (item) {
                     var div = document.createElement('div');
                     div.className = "flex items-center gap-2.5 p-2.5 md:p-3 bg-slate-50 border border-slate-100 rounded-xl md:rounded-2xl";
                     var badgeStatus = item.isBackedUp ?
-                        '<span class="text-[8px] md:text-[9px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-200 px-1.5 md:px-2 py-0.5 rounded-full shrink-0">BA Terbit</span>' :
-                        '<span class="text-[8px] md:text-[9px] font-bold text-amber-800 bg-amber-100 border border-amber-200 px-1.5 md:px-2 py-0.5 rounded-full shrink-0">Belum BA</span>';
+                        '<span class="text-[8px] md:text-[9px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-200 px-1.5 md:px-2 py-0.5 rounded-full shrink-0 flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-600"></i> Sudah BA</span>' :
+                        '<span class="text-[8px] md:text-[9px] font-bold text-amber-800 bg-amber-100 border border-amber-200 px-1.5 md:px-2 py-0.5 rounded-full shrink-0 flex items-center gap-1"><i class="fa-solid fa-clock text-amber-600"></i> Belum BA</span>';
 
+                    var tglDisplay = item.tanggal ? item.tanggal : '-';
+                    var itemEncoded = encodeURIComponent(JSON.stringify(item));
                     div.innerHTML = '<div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-white border border-slate-200 shrink-0 flex flex-col items-center justify-center shadow-2xs">' +
-                        '<span class="text-[8px] md:text-[9px] font-black text-slate-400 uppercase tracking-tighter">' + item.bulan.substring(0, 3) + '</span>' +
-                        '<span class="text-xs md:text-sm font-black text-sky-700 leading-none">' + item.tanggal + '</span></div>' +
-                        '<div class="flex-1 min-w-0"><div class="flex items-center justify-between gap-1"><h4 class="font-extrabold text-slate-900 text-xs truncate cursor-pointer hover:text-cyan-600" onclick="openDetailAcuanBAModalDirect(\'' + item.nama + '\', \'' + item.jenisBA + '\')">' + item.nama + '</h4>' + badgeStatus + '</div><p class="text-[10px] text-slate-500 font-medium truncate mt-0.5">' + item.jenisBA + '</p></div>';
+                        '<span class="text-[8px] md:text-[9px] font-black text-slate-400 uppercase tracking-tighter">' + (item.bulan ? item.bulan.substring(0, 3) : '') + '</span>' +
+                        '<span class="text-xs md:text-sm font-black text-sky-700 leading-none">' + tglDisplay + '</span></div>' +
+                        '<div class="flex-1 min-w-0"><div class="flex items-center justify-between gap-1"><h4 class="font-extrabold text-slate-900 text-xs truncate cursor-pointer hover:text-cyan-600" onclick="openDetailFromObject(\'' + itemEncoded + '\')">' + item.nama + '</h4>' + badgeStatus + '</div><p class="text-[10px] text-slate-500 font-medium truncate mt-0.5">' + (item.jenisBA || 'Kendala') + '</p></div>';
                     container.appendChild(div);
                 });
             }
 
-            document.getElementById('dashboard-acuan-page-info').innerText = "Hal " + currentDashboardAcuanPage + " dari " + totalPages;
+            document.getElementById('dashboard-acuan-page-info').innerText = "Hal " + currentDashboardAcuanPage + " dari " + totalPages + " (" + totalItems + " total)";
         }
 
         function changeDashboardAcuanPage(dir) { renderDashboardAcuanTable(currentDashboardAcuanPage + dir); }
