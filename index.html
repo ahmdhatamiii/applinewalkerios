@@ -3,9 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
     <title>Line Walker - PLN UPT Semarang</title>
+    <meta name="description" content="Aplikasi resmi operasional dan monitoring Line Walker PLN UPT Semarang.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://linewalkeruptsmg.my.id/">
+    <meta property="og:title" content="Line Walker - PLN UPT Semarang">
+    <meta property="og:description" content="Sistem Informasi Operasional Line Walker PLN UPT Semarang.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://linewalkeruptsmg.my.id/">
 
     <!-- PWA & APP ICONS (Official PLN Brand Logo) -->
     <link rel="icon" type="image/svg+xml"
@@ -129,6 +135,33 @@
         .selectable-text {
             user-select: text !important;
             -webkit-user-select: text !important;
+            box-sizing: border-box !important;
+            max-width: 100% !important;
+            font-size: 16px !important;
+            /* Prevent iOS zoom on focus */
+        }
+
+        /* Strict WebKit/iOS Mobile Input Containment */
+        input[type="date"],
+        input[type="time"],
+        input[type="datetime-local"] {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            display: block !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            font-size: 16px !important;
+            /* Prevent iOS zoom */
+        }
+
+        input[type="date"]::-webkit-date-and-time-value,
+        input[type="time"]::-webkit-date-and-time-value {
+            text-align: center;
+            min-height: 1.25rem;
+            width: 100%;
         }
 
         /* Taktil Micro-Interactions (Spring Touch) */
@@ -1220,8 +1253,8 @@
         class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 flex items-center justify-between py-2.5 px-2 md:px-3 mb-3 transition-all">
         <div class="flex items-center gap-2 md:gap-2.5 min-w-0">
             <!-- TOMBOL GARIS 3 (HAMBURGER MENU) KIRI ATAS -->
-            <button type="button" id="btn-toggle-sidebar" onclick="toggleSidebar()" aria-label="Buka Menu" aria-expanded="false" aria-controls="sidebar-drawer"
-                title="Menu Navigasi"
+            <button type="button" id="btn-toggle-sidebar" onclick="toggleSidebar()" aria-label="Buka Menu"
+                aria-expanded="false" aria-controls="sidebar-drawer" title="Menu Navigasi"
                 class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 flex items-center justify-center transition border border-slate-200/90 shadow-2xs shrink-0 cursor-pointer">
                 <i class="fa-solid fa-bars text-base md:text-lg text-slate-700" aria-hidden="true"></i>
             </button>
@@ -1240,18 +1273,17 @@
                 </svg>
             </div>
             <div class="min-w-0">
-                <div class="flex items-center gap-1.5">
-                    <h1
-                        class="text-sm sm:text-base md:text-lg font-black text-slate-900 tracking-tight leading-none uppercase">
-                        Line Walker UPT Semarang</h1>
-                </div>
-                <p class="text-[10px] md:text-[11px] text-slate-500 font-semibold truncate leading-tight mt-1">
-                    Sistem Monitoring & Operasional Transmisi</p>
+                <h1
+                    class="text-xs sm:text-base md:text-lg font-black text-slate-900 tracking-tight leading-none uppercase truncate">
+                    Line Walker <span class="hidden sm:inline">UPT Semarang</span></h1>
+                <p class="text-[9.5px] sm:text-[11px] text-slate-500 font-semibold truncate leading-tight mt-0.5">
+                    UPT Semarang</p>
             </div>
         </div>
         <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <!-- INDIKATOR / TOGGLE HAK AKSES ADMIN -->
-            <button id="btn-admin-auth-indicator" onclick="handleAdminIndicatorClick()" title="Mode Hak Akses" aria-label="Status Mode Admin"
+            <button id="btn-admin-auth-indicator" onclick="handleAdminIndicatorClick()" title="Mode Hak Akses"
+                aria-label="Status Mode Admin"
                 class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-bold transition shadow-2xs cursor-pointer">
                 <i id="admin-indicator-icon" class="fa-solid fa-lock text-slate-400 text-xs"></i>
                 <span id="admin-indicator-text">User</span>
@@ -1261,13 +1293,16 @@
                 <i class="fa-solid fa-download text-xs text-slate-500"></i>
                 <span>Pasang App</span>
             </button>
-            <button onclick="openAcuanKendalaModal()" title="Acuan Kendala Master" aria-label="Buka Acuan Kendala Master"
+            <button onclick="openAcuanKendalaModal()" title="Acuan Kendala Master"
+                aria-label="Buka Acuan Kendala Master"
                 class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition shadow-2xs">
                 <i class="fa-solid fa-book-bookmark text-xs text-slate-600" aria-hidden="true"></i>
             </button>
-            <button onclick="refreshPageUrl()" id="btn-refresh-dashboard" title="Segarkan Data" aria-label="Segarkan Data"
+            <button onclick="refreshPageUrl()" id="btn-refresh-dashboard" title="Segarkan Data"
+                aria-label="Segarkan Data"
                 class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition shadow-2xs">
-                <i id="icon-refresh-dashboard" class="fa-solid fa-arrows-rotate text-xs text-slate-600" aria-hidden="true"></i>
+                <i id="icon-refresh-dashboard" class="fa-solid fa-arrows-rotate text-xs text-slate-600"
+                    aria-hidden="true"></i>
             </button>
         </div>
     </header>
@@ -1900,8 +1935,8 @@
             <div class="segmented-bar no-scrollbar">
                 <button onclick="switchLainnyaSubTab('absensi')" id="btn-subnav-absensi"
                     class="subnav-chip active-cyan touch-spring">
-                    <i class="fa-solid fa-calendar-check text-xs"></i>
-                    <span>Absensi</span>
+                    <i class="fa-solid fa-calendar-days text-xs"></i>
+                    <span>Kalender Operasi</span>
                 </button>
                 <button onclick="switchLainnyaSubTab('peringatan')" id="btn-subnav-peringatan"
                     class="subnav-chip touch-spring">
@@ -1973,9 +2008,11 @@
                                 <i class="fa-solid fa-user-tie text-cyan-600 mr-1"></i> Filter KLW:
                             </label>
                             <div class="relative">
-                                <input type="text" id="tower-klw-search-input" autocomplete="off" placeholder="Semua KLW"
+                                <input type="text" id="tower-klw-search-input" autocomplete="off"
+                                    placeholder="Semua KLW"
                                     class="w-full bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs cursor-text"
-                                    onfocus="showTowerKLWDropdown()" onclick="showTowerKLWDropdown()" oninput="filterTowerKLWInput(this.value)" onkeydown="handleTowerKLWKeydown(event)">
+                                    onfocus="showTowerKLWDropdown()" onclick="showTowerKLWDropdown()"
+                                    oninput="filterTowerKLWInput(this.value)" onkeydown="handleTowerKLWKeydown(event)">
                                 <button type="button" onclick="toggleTowerKLWDropdown(event)" tabindex="-1"
                                     class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer">
                                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -1995,9 +2032,11 @@
                                 <i class="fa-solid fa-bolt text-cyan-600 mr-1"></i> Filter GI (Gardu Induk):
                             </label>
                             <div class="relative">
-                                <input type="text" id="tower-gi-search-input" autocomplete="off" placeholder="Semua Gardu Induk"
+                                <input type="text" id="tower-gi-search-input" autocomplete="off"
+                                    placeholder="Semua Gardu Induk"
                                     class="w-full bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs cursor-text"
-                                    onfocus="showTowerGIDropdown()" onclick="showTowerGIDropdown()" oninput="filterTowerGIInput(this.value)" onkeydown="handleTowerGIKeydown(event)">
+                                    onfocus="showTowerGIDropdown()" onclick="showTowerGIDropdown()"
+                                    oninput="filterTowerGIInput(this.value)" onkeydown="handleTowerGIKeydown(event)">
                                 <button type="button" onclick="toggleTowerGIDropdown(event)" tabindex="-1"
                                     class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer">
                                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -2013,13 +2052,17 @@
 
                         <!-- FILTER 3: PENGHANTAR (COMBOBOX AUTOCOMPLETE) -->
                         <div class="relative" id="tower-penghantar-combobox-wrapper">
-                            <label for="tower-penghantar-search-input" class="block text-[11px] font-bold text-slate-700 mb-1">
+                            <label for="tower-penghantar-search-input"
+                                class="block text-[11px] font-bold text-slate-700 mb-1">
                                 <i class="fa-solid fa-tower-broadcast text-cyan-600 mr-1"></i> Filter Penghantar:
                             </label>
                             <div class="relative">
-                                <input type="text" id="tower-penghantar-search-input" autocomplete="off" placeholder="Semua Penghantar"
+                                <input type="text" id="tower-penghantar-search-input" autocomplete="off"
+                                    placeholder="Semua Penghantar"
                                     class="w-full bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs cursor-text"
-                                    onfocus="showTowerPenghantarDropdown()" onclick="showTowerPenghantarDropdown()" oninput="filterTowerPenghantarInput(this.value)" onkeydown="handleTowerPenghantarKeydown(event)">
+                                    onfocus="showTowerPenghantarDropdown()" onclick="showTowerPenghantarDropdown()"
+                                    oninput="filterTowerPenghantarInput(this.value)"
+                                    onkeydown="handleTowerPenghantarKeydown(event)">
                                 <button type="button" onclick="toggleTowerPenghantarDropdown(event)" tabindex="-1"
                                     class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer">
                                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -2039,9 +2082,11 @@
                                 <i class="fa-solid fa-person-walking text-cyan-600 mr-1"></i> Filter Line Walker:
                             </label>
                             <div class="relative">
-                                <input type="text" id="tower-lw-search-input" autocomplete="off" placeholder="Semua Line Walker"
+                                <input type="text" id="tower-lw-search-input" autocomplete="off"
+                                    placeholder="Semua Line Walker"
                                     class="w-full bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs cursor-text"
-                                    onfocus="showTowerLWDropdown()" onclick="showTowerLWDropdown()" oninput="filterTowerLWInput(this.value)" onkeydown="handleTowerLWKeydown(event)">
+                                    onfocus="showTowerLWDropdown()" onclick="showTowerLWDropdown()"
+                                    oninput="filterTowerLWInput(this.value)" onkeydown="handleTowerLWKeydown(event)">
                                 <button type="button" onclick="toggleTowerLWDropdown(event)" tabindex="-1"
                                     class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer">
                                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -2102,11 +2147,13 @@
                                 Titik Terpetakan</span>
                         </div>
                         <div class="flex items-center gap-1.5 text-xs flex-wrap">
-                            <button type="button" onclick="goToUserCurrentLocation()" id="btn-map-my-location" title="Deteksi Lokasi GPS Saat Ini"
+                            <button type="button" onclick="goToUserCurrentLocation()" id="btn-map-my-location"
+                                title="Deteksi Lokasi GPS Saat Ini"
                                 class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition flex items-center gap-1 cursor-pointer">
                                 <i class="fa-solid fa-location-crosshairs text-[10px]"></i> <span>Lokasi Saya</span>
                             </button>
-                            <button type="button" onclick="toggleNearestOnly()" id="btn-map-toggle-nearest" title="Beralih antara hanya tower terdekat atau semua tower"
+                            <button type="button" onclick="toggleNearestOnly()" id="btn-map-toggle-nearest"
+                                title="Beralih antara hanya tower terdekat atau semua tower"
                                 class="hidden px-2.5 py-1 text-[11px] font-bold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition flex items-center gap-1 cursor-pointer">
                                 <i class="fa-solid fa-filter text-[10px]"></i> <span>Tower Terdekat</span>
                             </button>
@@ -2125,7 +2172,7 @@
                         <div
                             class="w-full h-full flex flex-col items-center justify-center text-slate-400 text-xs font-semibold p-4">
                             <i class="fa-solid fa-map-location-dot text-3xl mb-2 text-slate-300"></i>
-                            <p>Pilih Line Walker untuk menampilkan peta sebaran tower</p>
+                            <p>Pilih Petugas / Area untuk menampilkan peta sebaran tower</p>
                         </div>
                     </div>
                 </div>
@@ -2150,7 +2197,7 @@
                             </thead>
                             <tbody id="tower-table-body" class="divide-y divide-slate-100 font-medium text-slate-800">
                                 <tr>
-                                    <td colspan="9" class="p-4 text-center text-slate-400 text-xs">Pilih Line Walker
+                                    <td colspan="9" class="p-4 text-center text-slate-400 text-xs">Pilih Petugas / Area
                                         untuk melihat data tower</td>
                                 </tr>
                             </tbody>
@@ -2179,109 +2226,132 @@
                 </div>
             </div>
 
-            <!-- SUB-MODULE 1: PANTAU ABSENSI (URUTAN PERTAMA & DEFAULT) -->
+            <!-- SUB-MODULE 1: Kalender Operasi (URUTAN PERTAMA & DEFAULT) -->
             <div id="lainnya-subview-absensi" class="space-y-3.5 md:space-y-4">
                 <div
-                    class="flex items-center justify-between bg-white p-3.5 md:p-4 rounded-xl md:rounded-2xl border border-slate-200/80 shadow-2xs">
-                    <div>
-                        <h2 class="text-sm md:text-base font-black text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-days text-cyan-600"></i> Pantau Absensi
+                    class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs gap-3">
+                    <div class="min-w-0">
+                        <h2 class="text-sm font-black text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-days text-cyan-600 shrink-0"></i>
+                            <span>Kalender Operasi</span>
                         </h2>
-                        <p class="text-[10px] text-slate-400 font-semibold">Khusus Pantau Petugas Terlambat & Tidak
-                            Checkout</p>
+                        <p class="text-[10px] text-slate-400 font-semibold mt-0.5 leading-tight">Khusus Pantau Petugas
+                            Terlambat &amp; Tidak Checkout</p>
                     </div>
                     <button type="button" onclick="toggleAddAbsensiForm()" id="btn-toggle-add-lw"
-                        class="btn-cyan text-xs px-3 py-2 rounded-xl md:rounded-2xl flex items-center gap-1.5 shadow-xs active:scale-95 shrink-0 cursor-pointer">
-                        <i class="fa-solid fa-user-plus text-xs"></i> <span>Tambah LW</span>
+                        class="btn-cyan text-xs px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-xs active:scale-95 shrink-0 cursor-pointer font-bold whitespace-nowrap">
+                        <i class="fa-solid fa-user-plus text-xs"></i>
+                        <span>Tambah Catatan</span>
                     </button>
                 </div>
 
-                <!-- FORM TAMBAH PERSONIL ABSENSI (HANYA MUNCUL SAAT TAMBAH LW DIPENCET) -->
+                <!-- FORM Tambah Catatan Operasional (HANYA MUNCUL SAAT Tambah Catatan DIPENCET) -->
                 <div id="card-add-absensi-personel"
-                    class="clean-card p-3.5 md:p-4 bg-white border border-cyan-200/90 shadow-md space-y-3 hidden transition-all">
-                    <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                        <h3 class="text-xs md:text-sm font-black text-slate-900 flex items-center gap-2">
+                    class="clean-card p-4 bg-white border border-cyan-200/90 shadow-md space-y-3.5 hidden transition-all">
+                    <!-- Header Form -->
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                        <h3 class="text-xs font-black text-slate-900 flex items-center gap-2">
                             <span
-                                class="w-7 h-7 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0">
+                                class="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0">
                                 <i class="fa-solid fa-user-plus text-xs"></i>
                             </span>
-                            <span>Tambah Personil Absensi</span>
+                            <span>Tambah Catatan Operasional</span>
                         </h3>
-                        <div class="flex items-center gap-2">
-                            <span class="text-[10px] text-slate-400 font-semibold hidden sm:inline">Input Presensi
-                                Harian</span>
-                            <button type="button" onclick="closeAddAbsensiForm()"
-                                class="w-6 h-6 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-400 hover:text-rose-600 flex items-center justify-center transition cursor-pointer"
-                                title="Tutup Form">
-                                <i class="fa-solid fa-xmark text-xs"></i>
-                            </button>
-                        </div>
+                        <button type="button" onclick="closeAddAbsensiForm()"
+                            class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-400 hover:text-rose-600 flex items-center justify-center transition cursor-pointer shrink-0"
+                            title="Tutup Form">
+                            <i class="fa-solid fa-xmark text-sm"></i>
+                        </button>
                     </div>
 
                     <form id="form-add-absensi-personel" onsubmit="submitAddPersonelAbsensi(event)"
-                        class="space-y-2.5 text-xs">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-600 mb-1">Tanggal Presensi:</label>
-                                <input type="date" id="absensi-add-tanggal" required
-                                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs">
+                        class="space-y-3 text-xs w-full max-w-full min-w-0 box-border">
+                        <!-- Row 1: Tanggal -->
+                        <div class="w-full min-w-0">
+                            <label
+                                class="block text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">Tanggal
+                                Catatan</label>
+                            <input type="date" id="absensi-add-tanggal" required
+                                class="w-full min-w-0 max-w-full block bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-800 text-center focus:outline-none focus:border-cyan-500 focus:bg-white transition text-xs box-border">
+                        </div>
+
+                        <!-- Row 2: Jenis Berita Acara (controls time field visibility) -->
+                        <div class="w-full min-w-0">
+                            <label
+                                class="block text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">Jenis
+                                Berita Acara</label>
+                            <select id="absensi-add-jenis-ba"
+                                class="w-full min-w-0 max-w-full block bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 focus:bg-white transition text-xs box-border"
+                                onchange="toggleAbsensiTimeFields(this.value)">
+                                <option value="Absensi / COC">Absensi / COC</option>
+                                <option value="Terlambat">Terlambat</option>
+                                <option value="Tepat Waktu / Selesai">Tepat Waktu / Selesai</option>
+                                <option value="Inspeksi">Inspeksi</option>
+                                <option value="Sosialisasi">Sosialisasi</option>
+                                <option value="Validasi">Validasi</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+
+                        <!-- Row 3: Pilih Petugas / Area -->
+                        <div class="relative w-full min-w-0" id="absensi-lw-combobox-wrapper">
+                            <label
+                                class="block text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">Pilih
+                                Petugas / Area</label>
+                            <div class="relative w-full min-w-0">
+                                <input type="text" id="absensi-lw-search-input" autocomplete="off"
+                                    placeholder="-- Ketik / Pilih Petugas / Area --" required
+                                    class="w-full min-w-0 max-w-full block bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 pr-9 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 focus:bg-white transition text-xs cursor-text box-border"
+                                    onfocus="showAbsensiLWDropdown()" onclick="showAbsensiLWDropdown()"
+                                    oninput="filterAbsensiLWDropdown(this.value)"
+                                    onkeydown="handleAbsensiLWKeydown(event)">
+                                <button type="button" onclick="toggleAbsensiLWDropdown(event)" tabindex="-1"
+                                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 w-6 h-6 flex items-center justify-center cursor-pointer">
+                                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                </button>
                             </div>
-                            <div class="relative" id="absensi-lw-combobox-wrapper">
-                                <label class="block text-[10px] font-bold text-slate-600 mb-1">Pilih Line Walker:</label>
-                                <div class="relative">
-                                    <input type="text" id="absensi-lw-search-input" autocomplete="off" placeholder="-- Ketik / Pilih Line Walker --" required
-                                        class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 pr-8 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs cursor-text"
-                                        onfocus="showAbsensiLWDropdown()" onclick="showAbsensiLWDropdown()" oninput="filterAbsensiLWDropdown(this.value)" onkeydown="handleAbsensiLWKeydown(event)">
-                                    <button type="button" onclick="toggleAbsensiLWDropdown(event)" tabindex="-1"
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer">
-                                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                                    </button>
-                                </div>
-                                <select id="absensi-add-lw-select" class="hidden"></select>
-                                <div id="absensi-lw-dropdown-list"
-                                    class="hidden absolute z-50 left-0 right-0 mt-1 max-h-52 overflow-y-auto bg-white border border-slate-200 rounded-xl shadow-lg p-1.5 text-xs space-y-0.5 divide-y divide-slate-100">
-                                </div>
+                            <select id="absensi-add-lw-select" class="hidden"></select>
+                            <div id="absensi-lw-dropdown-list"
+                                class="hidden absolute z-50 left-0 right-0 mt-1 max-h-52 overflow-y-auto bg-white border border-slate-200 rounded-xl shadow-lg p-1.5 text-xs space-y-0.5 divide-y divide-slate-100">
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-600 mb-1">Jam Masuk:</label>
-                                <input type="time" id="absensi-add-jam-masuk" value="08:00" required
-                                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs">
+                        <!-- Row 4: Jam Mulai & Jam Selesai (conditional) -->
+                        <div id="absensi-time-fields" class="grid grid-cols-2 gap-2.5 w-full min-w-0">
+                            <div class="min-w-0">
+                                <label
+                                    class="block text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">Jam
+                                    Mulai</label>
+                                <input type="time" id="absensi-add-jam-masuk" value="08:00"
+                                    class="w-full min-w-0 max-w-full block bg-slate-50 border border-slate-200 rounded-xl px-2 sm:px-3 py-2.5 font-bold text-slate-800 text-center focus:outline-none focus:border-cyan-500 focus:bg-white transition text-xs box-border">
                             </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-600 mb-1">Jam Keluar:</label>
+                            <div class="min-w-0">
+                                <label
+                                    class="block text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">Jam
+                                    Selesai</label>
                                 <input type="time" id="absensi-add-jam-keluar"
-                                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs">
-                            </div>
-                            <div class="col-span-2 sm:col-span-1">
-                                <label class="block text-[10px] font-bold text-slate-600 mb-1">Status Presensi:</label>
-                                <select id="absensi-add-status-select"
-                                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs">
-                                    <option value="Tidak Absen Checkout">Tidak Absen Checkout</option>
-                                    <option value="Terlambat">Terlambat</option>
-                                    <option value="Hadir Tepat Waktu">Hadir Tepat Waktu</option>
-                                </select>
+                                    class="w-full min-w-0 max-w-full block bg-slate-50 border border-slate-200 rounded-xl px-2 sm:px-3 py-2.5 font-bold text-slate-800 text-center focus:outline-none focus:border-cyan-500 focus:bg-white transition text-xs box-border">
                             </div>
                         </div>
 
-                        <div class="pt-1 flex items-center gap-2">
+                        <!-- Row 5: Action Buttons (50/50 equal) -->
+                        <div class="grid grid-cols-2 gap-2.5 pt-1 w-full min-w-0">
                             <button type="button" onclick="closeAddAbsensiForm()"
-                                class="w-1/3 py-2.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer">
+                                class="w-full min-w-0 py-3 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 active:scale-95 transition cursor-pointer">
                                 Batal
                             </button>
                             <button type="submit" id="btn-submit-absensi-personel"
-                                class="flex-1 btn-cyan py-2.5 rounded-xl text-xs font-bold shadow-xs active:scale-95 transition flex items-center justify-center gap-1.5 cursor-pointer">
-                                <i class="fa-solid fa-floppy-disk"></i> Simpan Personil Absensi
+                                class="w-full min-w-0 btn-cyan py-3 rounded-xl text-xs font-bold shadow-xs active:scale-95 transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Simpan Catatan</span>
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <div class="flex gap-2">
+                <div class="grid grid-cols-3 gap-2 w-full min-w-0">
                     <select id="absensi-month-select" onchange="loadAbsensiCalendar()"
-                        class="flex-1 bg-white text-xs font-bold text-slate-800 border border-slate-200 rounded-xl md:rounded-2xl px-3 py-2.5 focus:outline-none shadow-2xs">
+                        class="col-span-2 w-full min-w-0 max-w-full bg-white text-xs font-bold text-slate-800 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-cyan-500 shadow-2xs box-border">
                         <option value="JANUARI">Januari</option>
                         <option value="FEBRUARI">Februari</option>
                         <option value="MARET">Maret</option>
@@ -2297,74 +2367,84 @@
                     </select>
 
                     <select id="absensi-year-select" onchange="loadAbsensiCalendar()"
-                        class="w-24 md:w-28 bg-white text-xs font-bold text-slate-800 border border-slate-200 rounded-xl md:rounded-2xl px-2.5 md:px-3 py-2.5 focus:outline-none shadow-2xs">
+                        class="col-span-1 w-full min-w-0 max-w-full bg-white text-xs font-bold text-slate-800 border border-slate-200 rounded-xl px-2.5 py-2.5 text-center focus:outline-none focus:border-cyan-500 shadow-2xs box-border">
                         <option value="2026" selected>2026</option>
                         <option value="2027">2027</option>
                     </select>
                 </div>
 
-                <div class="clean-card p-3 md:p-4 space-y-2.5 md:space-y-3">
+                <div class="clean-card p-3.5 md:p-4 space-y-3 bg-white">
                     <div
-                        class="grid grid-cols-7 gap-1 text-center font-extrabold text-[9px] md:text-[10px] text-slate-400 pb-2 border-b border-slate-100 uppercase">
-                        <span
-                            class="text-rose-500">Ming</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+                        class="grid grid-cols-7 gap-1 text-center font-extrabold text-[10px] text-slate-400 pb-2 border-b border-slate-100 uppercase tracking-wider">
+                        <span class="text-rose-500">Ming</span>
+                        <span>Sen</span>
+                        <span>Sel</span>
+                        <span>Rab</span>
+                        <span>Kam</span>
+                        <span>Jum</span>
+                        <span>Sab</span>
                     </div>
                     <div id="absensi-calendar-grid" class="grid grid-cols-7 gap-1 text-center text-xs"></div>
+
+                    <!-- Keterangan Indikator (Legend) -->
+                    <div
+                        class="flex items-center justify-center gap-4 pt-2 border-t border-slate-100 text-[10px] font-bold text-slate-500">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-slate-700 inline-block"></span>
+                            <span>Tidak Checkout</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
+                            <span>Terlambat</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- REKAP PELANGGARAN MINGGUAN (M1 - M5) UNTUK INTEGRASI MENU CEKLIS -->
                 <div class="clean-card p-3.5 md:p-4 bg-white border border-slate-200/80 shadow-2xs space-y-3">
-                    <div
-                        class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
-                        <div>
+                    <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
+                        <div class="min-w-0">
                             <h3 class="text-xs md:text-sm font-black text-slate-900 flex items-center gap-2">
                                 <span
                                     class="w-7 h-7 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
                                     <i class="fa-solid fa-list-check text-xs"></i>
                                 </span>
-                                <span>Rekap Pelanggaran Mingguan (M1 - M5)</span>
+                                <span class="truncate">Rekap Mingguan (M1 - M5)</span>
                             </h3>
                         </div>
-                        <div class="flex items-center gap-1.5 self-end sm:self-auto">
-                            <button type="button" id="btn-submit-weekly-ceklis" onclick="submitWeeklyAbsensiToCeklis()"
-                                class="btn-cyan text-[11px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow-xs active:scale-95 transition cursor-pointer">
-                                <i class="fa-solid fa-arrows-rotate text-xs"></i>
-                                <span>Sinkron ke Ceklis</span>
-                            </button>
-                        </div>
+                        <button type="button" id="btn-submit-weekly-ceklis" onclick="submitWeeklyAbsensiToCeklis()"
+                            class="btn-cyan text-[11px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow-xs active:scale-95 transition cursor-pointer shrink-0">
+                            <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                            <span>Sinkron Ceklis</span>
+                        </button>
                     </div>
 
                     <!-- TAB PERIODE MINGGUAN (M1 s.d. M5) -->
-                    <div class="grid grid-cols-5 gap-1 p-1 bg-slate-100/80 rounded-xl text-center">
+                    <div class="grid grid-cols-5 gap-1.5 p-1.5 bg-slate-100/90 rounded-2xl text-center">
                         <button type="button" onclick="selectAbsensiWeek(1)" id="btn-week-tab-1"
-                            class="py-1 sm:py-1.5 px-0.5 sm:px-1 rounded-lg bg-white text-cyan-700 shadow-2xs font-black transition flex flex-col items-center justify-center">
-                            <span class="text-[10px] sm:text-xs font-black leading-tight">M1</span>
-                            <span
-                                class="text-[8px] sm:text-[9.5px] font-semibold opacity-75 leading-tight whitespace-nowrap">1-7</span>
+                            class="py-1.5 px-1 rounded-xl bg-white text-cyan-700 shadow-2xs font-black transition flex flex-col items-center justify-center cursor-pointer">
+                            <span class="text-xs font-black leading-tight">M1</span>
+                            <span class="text-[9px] font-bold opacity-75 leading-tight whitespace-nowrap">1-7</span>
                         </button>
                         <button type="button" onclick="selectAbsensiWeek(2)" id="btn-week-tab-2"
-                            class="py-1 sm:py-1.5 px-0.5 sm:px-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-bold flex flex-col items-center justify-center">
-                            <span class="text-[10px] sm:text-xs font-black leading-tight">M2</span>
-                            <span
-                                class="text-[8px] sm:text-[9.5px] font-semibold opacity-75 leading-tight whitespace-nowrap">8-14</span>
+                            class="py-1.5 px-1 rounded-xl text-slate-600 hover:text-slate-900 transition font-bold flex flex-col items-center justify-center cursor-pointer">
+                            <span class="text-xs font-black leading-tight">M2</span>
+                            <span class="text-[9px] font-bold opacity-75 leading-tight whitespace-nowrap">8-14</span>
                         </button>
                         <button type="button" onclick="selectAbsensiWeek(3)" id="btn-week-tab-3"
-                            class="py-1 sm:py-1.5 px-0.5 sm:px-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-bold flex flex-col items-center justify-center">
-                            <span class="text-[10px] sm:text-xs font-black leading-tight">M3</span>
-                            <span
-                                class="text-[8px] sm:text-[9.5px] font-semibold opacity-75 leading-tight whitespace-nowrap">15-21</span>
+                            class="py-1.5 px-1 rounded-xl text-slate-600 hover:text-slate-900 transition font-bold flex flex-col items-center justify-center cursor-pointer">
+                            <span class="text-xs font-black leading-tight">M3</span>
+                            <span class="text-[9px] font-bold opacity-75 leading-tight whitespace-nowrap">15-21</span>
                         </button>
                         <button type="button" onclick="selectAbsensiWeek(4)" id="btn-week-tab-4"
-                            class="py-1 sm:py-1.5 px-0.5 sm:px-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-bold flex flex-col items-center justify-center">
-                            <span class="text-[10px] sm:text-xs font-black leading-tight">M4</span>
-                            <span
-                                class="text-[8px] sm:text-[9.5px] font-semibold opacity-75 leading-tight whitespace-nowrap">22-28</span>
+                            class="py-1.5 px-1 rounded-xl text-slate-600 hover:text-slate-900 transition font-bold flex flex-col items-center justify-center cursor-pointer">
+                            <span class="text-xs font-black leading-tight">M4</span>
+                            <span class="text-[9px] font-bold opacity-75 leading-tight whitespace-nowrap">22-28</span>
                         </button>
                         <button type="button" onclick="selectAbsensiWeek(5)" id="btn-week-tab-5"
-                            class="py-1 sm:py-1.5 px-0.5 sm:px-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-bold flex flex-col items-center justify-center">
-                            <span class="text-[10px] sm:text-xs font-black leading-tight">M5</span>
-                            <span
-                                class="text-[8px] sm:text-[9.5px] font-semibold opacity-75 leading-tight whitespace-nowrap">29-31</span>
+                            class="py-1.5 px-1 rounded-xl text-slate-600 hover:text-slate-900 transition font-bold flex flex-col items-center justify-center cursor-pointer">
+                            <span class="text-xs font-black leading-tight">M5</span>
+                            <span class="text-[9px] font-bold opacity-75 leading-tight whitespace-nowrap">29-31</span>
                         </button>
                     </div>
 
@@ -2752,15 +2832,18 @@
     <!-- MODAL PIN ADMIN AUTHENTICATION -->
     <div id="modal-admin-pin"
         class="fixed inset-0 bg-slate-900/60 z-[9999] flex items-center justify-center p-3.5 sm:p-4 hidden backdrop-blur-xs transition-opacity">
-        <div class="center-modal w-full max-w-sm p-4 md:p-5 relative space-y-3.5 bg-white rounded-2xl shadow-2xl border border-slate-200">
+        <div
+            class="center-modal w-full max-w-sm p-4 md:p-5 relative space-y-3.5 bg-white rounded-2xl shadow-2xl border border-slate-200">
             <div class="flex items-center justify-between pb-2 border-b border-slate-100">
                 <div class="flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                    <span
+                        class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-shield-halved text-sm"></i>
                     </span>
                     <div>
                         <h3 class="text-xs md:text-sm font-black text-slate-900">Verifikasi Hak Akses</h3>
-                        <p class="text-[10px] text-slate-500 font-semibold" id="admin-pin-modal-subtitle">Aksi ini memerlukan hak akses Admin</p>
+                        <p class="text-[10px] text-slate-500 font-semibold" id="admin-pin-modal-subtitle">Aksi ini
+                            memerlukan hak akses Admin</p>
                     </div>
                 </div>
                 <button type="button" onclick="closeAdminPinModal()"
@@ -2771,11 +2854,14 @@
 
             <form onsubmit="submitAdminPin(event)" class="space-y-3">
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-700 mb-1.5 text-center">Masukkan PIN Admin:</label>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1.5 text-center">Masukkan PIN
+                        Admin:</label>
                     <div class="relative max-w-[200px] mx-auto">
-                        <input type="password" id="input-admin-pin" maxlength="6" placeholder="••••••" required autocomplete="current-password"
+                        <input type="password" id="input-admin-pin" maxlength="6" placeholder="••••••" required
+                            autocomplete="current-password"
                             class="w-full text-center tracking-widest text-lg font-black bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 focus:outline-none focus:border-cyan-500 focus:bg-white text-slate-900 shadow-inner">
-                        <button type="button" onclick="toggleShowAdminPin()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs p-1">
+                        <button type="button" onclick="toggleShowAdminPin()"
+                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs p-1">
                             <i id="icon-toggle-admin-pin" class="fa-solid fa-eye"></i>
                         </button>
                     </div>
@@ -2798,10 +2884,12 @@
     <!-- MODAL KELOLA LEMBURAN (ADMIN) -->
     <div id="modal-kelola-lemburan"
         class="fixed inset-0 bg-slate-900/60 z-[85] flex items-center justify-center p-3.5 sm:p-4 hidden backdrop-blur-xs transition-opacity">
-        <div class="center-modal w-full max-w-lg p-4 md:p-5 relative space-y-3 bg-white rounded-2xl shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+        <div
+            class="center-modal w-full max-w-lg p-4 md:p-5 relative space-y-3 bg-white rounded-2xl shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between pb-2 border-b border-slate-100">
                 <div class="flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                    <span
+                        class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-file-excel text-sm"></i>
                     </span>
                     <div>
@@ -2844,19 +2932,23 @@
 
                 <div>
                     <label class="block text-[10px] font-bold text-slate-600 mb-1">Nama Berkas:</label>
-                    <input type="text" id="lemburan-admin-nama" placeholder="Contoh: LEMBUR OKTOBER UPT SEMARANG" required
+                    <input type="text" id="lemburan-admin-nama" placeholder="Contoh: LEMBUR OKTOBER UPT SEMARANG"
+                        required
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs">
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-600 mb-1">Link URL Google Sheets / Drive:</label>
+                    <label class="block text-[10px] font-bold text-slate-600 mb-1">Link URL Google Sheets /
+                        Drive:</label>
                     <input type="url" id="lemburan-admin-url" placeholder="https://docs.google.com/spreadsheets/d/..."
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-slate-800 focus:outline-none focus:border-cyan-500 text-xs">
-                    <p class="text-[10px] text-slate-400 mt-1">Masukkan URL Google Sheets rekapitulasi lemburan bulanan.</p>
+                    <p class="text-[10px] text-slate-400 mt-1">Masukkan URL Google Sheets rekapitulasi lemburan bulanan.
+                    </p>
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-600 mb-1">Atau Unggah Berkas Excel (.xlsx):</label>
+                    <label class="block text-[10px] font-bold text-slate-600 mb-1">Atau Unggah Berkas Excel
+                        (.xlsx):</label>
                     <input type="file" id="lemburan-admin-file" accept=".xlsx,.xls"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-slate-700 text-xs">
                 </div>
@@ -3418,25 +3510,28 @@
 
     <div id="modal-detail-absensi"
         class="fixed inset-0 bg-slate-900/60 z-[75] flex items-center justify-center p-3.5 sm:p-4 hidden backdrop-blur-xs transition-opacity">
-        <div class="center-modal w-full max-w-md p-4 md:p-5 relative space-y-3 max-h-[88vh] overflow-y-auto">
+        <div class="center-modal w-full max-w-md p-4 md:p-5 relative space-y-3.5 max-h-[88vh] overflow-y-auto">
 
-            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                <div>
-                    <h3 class="text-xs md:text-sm font-black text-slate-900 flex items-center gap-1.5">
-                        <i class="fa-solid fa-calendar-day text-cyan-600"></i> Detail Absensi Tanggal <span
-                            id="absensi-modal-date-title" class="text-cyan-600 font-bold">01</span>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="min-w-0">
+                    <h3 class="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1.5 truncate">
+                        <i class="fa-solid fa-calendar-day text-cyan-600 shrink-0"></i>
+                        <span>Detail Absensi Tanggal <span id="absensi-modal-date-title"
+                                class="text-cyan-600 font-bold">01</span></span>
                     </h3>
-                    <p class="text-[10px] text-slate-400 font-semibold">Rincian Petugas Tidak Checkout & Terlambat</p>
+                    <p class="text-[10px] text-slate-400 font-semibold truncate mt-0.5">Rincian Petugas Tidak Checkout
+                        &amp; Terlambat</p>
                 </div>
-                <button onclick="closeAbsensiModal()"
-                    class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:text-rose-500"><i
-                        class="fa-solid fa-xmark text-xs"></i></button>
+                <button type="button" onclick="closeAbsensiModal()"
+                    class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-400 hover:text-rose-600 flex items-center justify-center transition cursor-pointer shrink-0">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
             </div>
 
             <div class="space-y-1.5">
                 <h4
                     class="text-xs font-black text-slate-700 flex items-center gap-1.5 bg-slate-100 p-2 rounded-xl border border-slate-200">
-                    <i class="fa-solid fa-user-slash text-slate-600 text-xs"></i> Tidak Absen Checkout (<span
+                    <i class="fa-solid fa-user-slash text-slate-600 text-xs"></i> Absensi / COC (<span
                         id="count-tidak-checkout">0</span>)
                 </h4>
                 <div id="list-tidak-checkout-container" class="space-y-1 text-xs"></div>
@@ -3446,9 +3541,9 @@
                 <h4
                     class="text-xs font-black text-amber-600 flex items-center gap-1.5 bg-amber-50 p-2 rounded-xl border border-amber-100">
                     <i class="fa-solid fa-user-clock text-xs"></i> Keterlambatan Presence (<span
-                        id="count-terlambat">0</span>)
+                        id="count-Terlambat">0</span>)
                 </h4>
-                <div id="list-terlambat-container" class="space-y-1 text-xs"></div>
+                <div id="list-Terlambat-container" class="space-y-1 text-xs"></div>
             </div>
         </div>
     </div>
@@ -3640,9 +3735,11 @@
                 <div class="relative" id="req-lw-combobox-wrapper">
                     <label class="block font-bold text-slate-700 mb-1">Pilih / Cari Line Walker:</label>
                     <div class="relative">
-                        <input type="text" id="req-lw-search-input" autocomplete="off" placeholder="-- Ketik nama Line Walker --" required
+                        <input type="text" id="req-lw-search-input" autocomplete="off"
+                            placeholder="-- Ketik nama Line Walker --" required
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 pr-8 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs cursor-text"
-                            onfocus="showReqLWDropdown()" onclick="showReqLWDropdown()" oninput="filterReqLWDropdown(this.value)" onkeydown="handleReqLWKeydown(event)">
+                            onfocus="showReqLWDropdown()" onclick="showReqLWDropdown()"
+                            oninput="filterReqLWDropdown(this.value)" onkeydown="handleReqLWKeydown(event)">
                         <button type="button" onclick="toggleReqLWDropdown(event)" tabindex="-1"
                             class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer">
                             <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -3689,15 +3786,18 @@
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <label class="block font-bold text-slate-700">Detail Perubahan Jadwal:</label>
-                        <span class="text-[9px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full">
+                        <span
+                            class="text-[9px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-full">
                             <i class="fa-solid fa-rotate text-[8px] mr-0.5"></i> Target 4x Inspeksi / Bulan
                         </span>
                     </div>
                     <div class="flex gap-1 mb-1.5 overflow-x-auto pb-0.5">
-                        <button type="button" onclick="insertScheduleTemplate('single')" class="text-[10px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded-lg shrink-0 active:scale-95 transition">
+                        <button type="button" onclick="insertScheduleTemplate('single')"
+                            class="text-[10px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded-lg shrink-0 active:scale-95 transition">
                             <i class="fa-solid fa-list-check mr-1 text-slate-400"></i>Template Harian
                         </button>
-                        <button type="button" onclick="insertScheduleTemplate('multi')" class="text-[10px] font-semibold bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 px-2 py-1 rounded-lg shrink-0 active:scale-95 transition">
+                        <button type="button" onclick="insertScheduleTemplate('multi')"
+                            class="text-[10px] font-semibold bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 px-2 py-1 rounded-lg shrink-0 active:scale-95 transition">
                             <i class="fa-solid fa-calendar-week mr-1 text-sky-500"></i>Template 4 Minggu (M1-M4)
                         </button>
                     </div>
@@ -3705,7 +3805,8 @@
                         placeholder="Contoh format:&#10;Senin 95-101 Selasa 89-94 Rabu 82-88 Kamis 75,76,77 Jumat 79 Sabtu 74&#10;&#10;Atau per minggu:&#10;Minggu 1: Senin 95-101 Selasa 89-94...&#10;Minggu 2: ..."
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-medium text-slate-800 focus:outline-none focus:border-cyan-500"></textarea>
                     <p class="text-[9px] text-slate-400 mt-1 font-medium leading-tight">
-                        * Masing-masing tower & span akan diinspeksi 4 kali per bulan (otomatis dijadwalkan ke 4 siklus mingguan).
+                        * Masing-masing tower & span akan diinspeksi 4 kali per bulan (otomatis dijadwalkan ke 4 siklus
+                        mingguan).
                     </p>
                 </div>
 
@@ -3725,7 +3826,8 @@
         <div class="center-modal w-full max-w-lg p-4 md:p-5 relative space-y-3.5">
             <div class="flex items-center justify-between pb-2 border-b border-slate-100">
                 <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold border border-sky-100">
+                    <div
+                        class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold border border-sky-100">
                         <i class="fa-solid fa-calendar-days"></i>
                     </div>
                     <div>
@@ -3764,7 +3866,8 @@
                         <i class="fa-solid fa-copy text-xs"></i> <span>Salin Rincian</span>
                     </button>
                 </div>
-                <div id="detail-req-content-body" class="max-h-64 overflow-y-auto bg-slate-50 p-2.5 rounded-xl border border-slate-100"></div>
+                <div id="detail-req-content-body"
+                    class="max-h-64 overflow-y-auto bg-slate-50 p-2.5 rounded-xl border border-slate-100"></div>
             </div>
 
             <!-- Raw Text Preview (Bisa di-select langsung) -->
@@ -3873,10 +3976,10 @@
             <form id="form-surat-peringatan" onsubmit="submitInputSP(event)" class="space-y-3 text-xs">
                 <!-- Line Walker & NIP -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">1. Pilih Line Walker:</label>
+                    <label class="block font-bold text-slate-700 mb-1">1. Pilih Petugas / Area:</label>
                     <select id="sp-input-lw" onchange="handleSPLWChange()" required
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs">
-                        <option value="" disabled selected>-- Pilih Line Walker --</option>
+                        <option value="" disabled selected>-- Pilih Petugas / Area --</option>
                     </select>
                 </div>
 
@@ -4252,7 +4355,8 @@
                                 title="Ganti Foto Personel">
                                 <i class="fa-solid fa-camera text-[10px]"></i>
                             </label>
-                            <input type="file" id="detail-lw-file-input" accept="image/*" class="hidden" onchange="handleFotoUploadLW(event)">
+                            <input type="file" id="detail-lw-file-input" accept="image/*" class="hidden"
+                                onchange="handleFotoUploadLW(event)">
                         </div>
                         <div class="min-w-0">
                             <h4 id="detail-lw-nama" class="text-xs sm:text-sm font-black text-slate-900 truncate">NAMA
@@ -4264,7 +4368,8 @@
                                     class="text-[9px] font-extrabold text-cyan-800 bg-cyan-100 px-2 py-0.5 rounded-full">Line
                                     Walker</span>
                             </div>
-                            <span id="detail-lw-upload-status" class="text-[9px] text-cyan-600 font-bold block mt-1 hidden">
+                            <span id="detail-lw-upload-status"
+                                class="text-[9px] text-cyan-600 font-bold block mt-1 hidden">
                                 <i class="fa-solid fa-spinner fa-spin mr-1"></i> Mengunggah foto...
                             </span>
                         </div>
@@ -4364,7 +4469,8 @@
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-slate-800 focus:outline-none focus:border-cyan-500 text-xs">
                     </div>
                     <div class="sm:col-span-2">
-                        <label class="block text-[10px] font-bold text-slate-600 mb-1">URL Foto Profil (Drive / Web):</label>
+                        <label class="block text-[10px] font-bold text-slate-600 mb-1">URL Foto Profil (Drive /
+                            Web):</label>
                         <input type="text" id="edit-lw-foto-url"
                             placeholder="https://lh3.googleusercontent.com/d/... atau biarkan kosong"
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-mono text-[11px] text-slate-800 focus:outline-none focus:border-cyan-500">
@@ -5434,7 +5540,8 @@
                     </svg>
                 </div>
                 <div class="min-w-0">
-                    <h2 id="sidebar-title" class="text-sm font-black text-slate-900 uppercase tracking-tight leading-none">Line Walker</h2>
+                    <h2 id="sidebar-title"
+                        class="text-sm font-black text-slate-900 uppercase tracking-tight leading-none">Line Walker</h2>
                     <p class="text-[10px] text-slate-500 font-bold truncate mt-1">UPT Semarang</p>
                 </div>
             </div>
@@ -5598,49 +5705,69 @@
 
             function createGasRunner(successHandler, failureHandler, userObj) {
                 var runner = {
-                    withSuccessHandler: function(fn) {
+                    withSuccessHandler: function (fn) {
                         return createGasRunner(fn, failureHandler, userObj);
                     },
-                    withFailureHandler: function(fn) {
+                    withFailureHandler: function (fn) {
                         return createGasRunner(successHandler, fn, userObj);
                     },
-                    withUserObject: function(obj) {
+                    withUserObject: function (obj) {
                         return createGasRunner(successHandler, failureHandler, obj);
                     }
                 };
 
                 return new Proxy(runner, {
-                    get: function(target, propKey) {
+                    get: function (target, propKey) {
                         if (propKey in target) return target[propKey];
                         if (propKey === 'then' || propKey === 'toJSON' || typeof propKey === 'symbol') return undefined;
 
-                        return function() {
+                        return function () {
                             var args = Array.prototype.slice.call(arguments);
-                            var url = GAS_PROXY_URL
-                                + "?action=" + encodeURIComponent(propKey)
-                                + "&params=" + encodeURIComponent(JSON.stringify(args));
+                            var serializedArgs = JSON.stringify(args);
+                            var isLargeOrWrite = serializedArgs.length > 1000 ||
+                                propKey.indexOf('upload') !== -1 ||
+                                propKey.indexOf('save') !== -1 ||
+                                propKey.indexOf('import') !== -1 ||
+                                propKey.indexOf('submit') !== -1 ||
+                                propKey.indexOf('delete') !== -1 ||
+                                propKey.indexOf('uncheck') !== -1;
 
-                            fetch(url, {
-                                method: "GET",
-                                headers: { "Accept": "application/json" }
-                            })
-                            .then(function(res) {
-                                if (!res.ok) throw new Error("HTTP " + res.status);
-                                return res.json();
-                            })
-                            .then(function(data) {
-                                if (data && data.status === 'error') {
-                                    var err = new Error(data.message || 'Unknown GAS error');
+                            var fetchPromise;
+                            if (isLargeOrWrite) {
+                                fetchPromise = fetch(GAS_PROXY_URL, {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Accept": "application/json"
+                                    },
+                                    body: JSON.stringify({ action: propKey, params: args })
+                                });
+                            } else {
+                                var url = GAS_PROXY_URL
+                                    + "?action=" + encodeURIComponent(propKey)
+                                    + "&params=" + encodeURIComponent(serializedArgs);
+                                fetchPromise = fetch(url, {
+                                    method: "GET",
+                                    headers: { "Accept": "application/json" }
+                                });
+                            }
+                                .then(function (res) {
+                                    if (!res.ok) throw new Error("HTTP " + res.status);
+                                    return res.json();
+                                })
+                                .then(function (data) {
+                                    if (data && data.status === 'error') {
+                                        var err = new Error(data.message || 'Unknown GAS error');
+                                        if (failureHandler) failureHandler(err, userObj);
+                                        else console.error("[GAS Shim] Error:", err);
+                                    } else {
+                                        if (successHandler) successHandler(data, userObj);
+                                    }
+                                })
+                                .catch(function (err) {
+                                    console.error("[GAS Shim] RPC failure for " + propKey + ":", err);
                                     if (failureHandler) failureHandler(err, userObj);
-                                    else console.error("[GAS Shim] Error:", err);
-                                } else {
-                                    if (successHandler) successHandler(data, userObj);
-                                }
-                            })
-                            .catch(function(err) {
-                                console.error("[GAS Shim] RPC failure for " + propKey + ":", err);
-                                if (failureHandler) failureHandler(err, userObj);
-                            });
+                                });
                         };
                     }
                 });
@@ -5699,7 +5826,7 @@
                 return rawCeklisDataList.some(function (c) {
                     var cJenis = (c.jenisKendala || '').toLowerCase();
                     var cKet = (c.keteranganKendala || '').toLowerCase();
-                    var isAbs = (cJenis.indexOf('absensi') !== -1 || cKet.indexOf('absensi') !== -1 || cJenis.indexOf('checkout') !== -1 || cJenis.indexOf('terlambat') !== -1);
+                    var isAbs = (cJenis.indexOf('absensi') !== -1 || cKet.indexOf('absensi') !== -1 || cJenis.indexOf('checkout') !== -1 || cJenis.indexOf('Terlambat') !== -1);
                     return isAbs && getAbsensiCeklisKey(c.nama, c.tanggal, c.bulan) === k;
                 });
             }
@@ -6318,7 +6445,7 @@
                 s.innerHTML = '';
                 var placeholderOpt = document.createElement('option');
                 placeholderOpt.value = '';
-                placeholderOpt.innerText = '-- Pilih Line Walker --';
+                placeholderOpt.innerText = '-- Pilih Petugas / Area --';
                 placeholderOpt.disabled = true;
                 placeholderOpt.selected = true;
                 s.appendChild(placeholderOpt);
@@ -7908,7 +8035,7 @@
             (res.data || []).forEach(function (row) {
                 var cJenis = (row.jenisKendala || '').toLowerCase();
                 var cKet = (row.keteranganKendala || '').toLowerCase();
-                if (cJenis.indexOf('absensi') !== -1 || cKet.indexOf('absensi') !== -1 || cJenis.indexOf('checkout') !== -1 || cJenis.indexOf('terlambat') !== -1) {
+                if (cJenis.indexOf('absensi') !== -1 || cKet.indexOf('absensi') !== -1 || cJenis.indexOf('checkout') !== -1 || cJenis.indexOf('Terlambat') !== -1) {
                     var k = getAbsensiCeklisKey(row.nama, row.tanggal, row.bulan);
                     cachedSyncedCeklisKeys[k] = true;
                 }
@@ -8109,16 +8236,23 @@
                 }
 
                 if (typeof google !== 'undefined') {
-                    google.script.run.withSuccessHandler(function (res) {
-                        btn.disabled = false;
-                        btn.innerText = 'Upload & Simpan Ceklis';
-                        closeBatchUploadModal();
-                        selectedCeklisItems = [];
-                        updateCeklisFloatingBar();
-                        showToast(res.message);
-                        loadCeklisData();
-                        if (typeof loadDashboardData === 'function') loadDashboardData();
-                    }).uploadBatchCeklisBA({ items: items });
+                    google.script.run
+                        .withSuccessHandler(function (res) {
+                            btn.disabled = false;
+                            btn.innerText = 'Upload & Simpan Ceklis';
+                            closeBatchUploadModal();
+                            selectedCeklisItems = [];
+                            updateCeklisFloatingBar();
+                            showToast(res.message);
+                            loadCeklisData();
+                            if (typeof loadDashboardData === 'function') loadDashboardData();
+                        })
+                        .withFailureHandler(function (err) {
+                            btn.disabled = false;
+                            btn.innerText = 'Upload & Simpan Ceklis';
+                            showToast("Gagal upload: " + (err.message || err), true);
+                        })
+                        .uploadBatchCeklisBA({ items: items });
                 } else {
                     btn.disabled = false;
                     btn.innerText = 'Upload & Simpan Ceklis';
@@ -8739,7 +8873,7 @@
             if (!lw) {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i><span>Simpan Data Surat</span>';
-                showToast("Pilih Line Walker terlebih dahulu!", true);
+                showToast("Pilih Petugas / Area terlebih dahulu!", true);
                 return;
             }
 
@@ -9801,9 +9935,9 @@
                 renderAbsensiCalendar({
                     status: 'success',
                     data: {
-                        "01": { date: "01", terlambat: [{ nama: "EKA FEBRIANTO", nip: "9125904TJBT", jamMasuk: "08:30", keterangan: "Terlambat 30 Menit" }], tidakCheckout: [] },
-                        "02": { date: "02", terlambat: [], tidakCheckout: [{ nama: "ABDUL ROCHMAN", nip: "7525641TJBT", jamMasuk: "08:15" }] },
-                        "03": { date: "03", terlambat: [{ nama: "FIRMAN ADI PRASETYO", nip: "000000", jamMasuk: "10:36", keterangan: "Terlambat (Checkin 10:36)" }], tidakCheckout: [{ nama: "ROFIUL HADI", nip: "000000", jamMasuk: "14:42" }, { nama: "AHMAD TAUFIK", nip: "000000", jamMasuk: "12:22" }] }
+                        "01": { date: "01", Terlambat: [{ nama: "EKA FEBRIANTO", nip: "9125904TJBT", jamMasuk: "08:30", keterangan: "Terlambat 30 Menit" }], tidakCheckout: [] },
+                        "02": { date: "02", Terlambat: [], tidakCheckout: [{ nama: "ABDUL ROCHMAN", nip: "7525641TJBT", jamMasuk: "08:15" }] },
+                        "03": { date: "03", Terlambat: [{ nama: "FIRMAN ADI PRASETYO", nip: "000000", jamMasuk: "10:36", keterangan: "Terlambat (Checkin 10:36)" }], tidakCheckout: [{ nama: "ROFIUL HADI", nip: "000000", jamMasuk: "14:42" }, { nama: "AHMAD TAUFIK", nip: "000000", jamMasuk: "12:22" }] }
                     }
                 }, m, y);
             }
@@ -9826,15 +9960,18 @@
             var firstDayIndex = new Date(yearNum, monthIndex, 1).getDay();
             var totalDaysInMonth = new Date(yearNum, monthIndex + 1, 0).getDate();
 
+            var now = new Date();
+            var isCurrentMonth = (now.getFullYear() === yearNum && now.getMonth() === monthIndex);
+
             for (var p = 0; p < firstDayIndex; p++) {
                 var emptyCell = document.createElement('div');
-                emptyCell.className = "p-1.5 min-h-[46px] bg-slate-100/40 rounded-xl border border-transparent";
+                emptyCell.className = "p-1 min-h-[44px] sm:min-h-[48px] rounded-xl border border-transparent";
                 grid.appendChild(emptyCell);
             }
 
             for (var day = 1; day <= totalDaysInMonth; day++) {
                 var dayStr = ("0" + day).slice(-2);
-                var dayData = cachedAbsensiCalendarData[dayStr] || { terlambat: [], tidakCheckout: [] };
+                var dayData = cachedAbsensiCalendarData[dayStr] || { Terlambat: [], tidakCheckout: [] };
 
                 var tcMap = {};
                 var tcList = [];
@@ -9847,7 +9984,7 @@
                 });
 
                 var tbList = [];
-                (dayData.terlambat || []).forEach(function (item) {
+                (dayData.Terlambat || []).forEach(function (item) {
                     var k = (item.nama || '').trim().toUpperCase();
                     if (k && !tcMap[k]) {
                         tbList.push(item);
@@ -9856,17 +9993,27 @@
 
                 var countTerlambat = tbList.length;
                 var countTidakCheckout = tcList.length;
+                var isSunday = ((firstDayIndex + day - 1) % 7 === 0);
+                var isToday = isCurrentMonth && (now.getDate() === day);
 
                 var cell = document.createElement('button');
+                cell.type = "button";
                 cell.onclick = (function (dStr) { return function () { openAbsensiModal(dStr, monthName, yearStr); }; })(dayStr);
-                cell.className = "p-1 md:p-1.5 rounded-xl md:rounded-2xl border flex flex-col items-center justify-between min-h-[46px] md:min-h-[52px] transition active:scale-95 bg-slate-50 border-slate-200 hover:border-cyan-500 shadow-2xs";
+
+                var borderClass = isToday
+                    ? "ring-2 ring-cyan-500 bg-cyan-50/80 border-cyan-400"
+                    : ((countTidakCheckout > 0 || countTerlambat > 0) ? "bg-white border-slate-200 hover:border-cyan-400 shadow-2xs" : "bg-slate-50/70 border-slate-200/60 hover:bg-white");
+
+                cell.className = "p-1 rounded-xl border flex flex-col items-center justify-between min-h-[44px] sm:min-h-[48px] transition active:scale-95 cursor-pointer " + borderClass;
+
+                var textCol = isSunday ? "text-rose-500 font-black" : (isToday ? "text-cyan-800 font-black" : "text-slate-800 font-extrabold");
 
                 var badgeDots = '';
-                if (countTidakCheckout > 0) badgeDots += '<span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-slate-600" title="Tidak Absen Checkout"></span>';
-                if (countTerlambat > 0) badgeDots += '<span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-amber-500" title="Keterlambatan"></span>';
+                if (countTidakCheckout > 0) badgeDots += '<span class="w-1.5 h-1.5 rounded-full bg-slate-700" title="Absensi / COC"></span>';
+                if (countTerlambat > 0) badgeDots += '<span class="w-1.5 h-1.5 rounded-full bg-amber-500" title="KeTerlambat"></span>';
 
-                cell.innerHTML = '<span class="font-extrabold text-slate-800 text-[11px] md:text-xs">' + day + '</span>' +
-                    '<div class="flex gap-0.5 md:gap-1 justify-center mt-0.5">' + badgeDots + '</div>';
+                cell.innerHTML = '<span class="' + textCol + ' text-[11px] sm:text-xs leading-none mt-0.5">' + day + '</span>' +
+                    '<div class="flex gap-1 justify-center items-center h-2 mb-0.5">' + badgeDots + '</div>';
 
                 grid.appendChild(cell);
             }
@@ -9880,10 +10027,10 @@
             currentSelectedAbsensiMonth = monthName;
             currentSelectedAbsensiYear = yearStr;
 
-            var dayData = cachedAbsensiCalendarData[dayStr] || { terlambat: [], tidakCheckout: [] };
+            var dayData = cachedAbsensiCalendarData[dayStr] || { Terlambat: [], tidakCheckout: [] };
             document.getElementById('absensi-modal-date-title').innerText = dayStr + " " + monthName + " " + yearStr;
 
-            var containerTerlambat = document.getElementById('list-terlambat-container');
+            var containerTerlambat = document.getElementById('list-Terlambat-container');
             var containerTidakCheckout = document.getElementById('list-tidak-checkout-container');
 
             containerTerlambat.innerHTML = '';
@@ -9901,16 +10048,16 @@
             });
 
             var uniqueTerlambat = [];
-            (dayData.terlambat || []).forEach(function (item) {
+            (dayData.Terlambat || []).forEach(function (item) {
                 var k = (item.nama || '').trim().toUpperCase();
-                // Jika sudah ada di tidak checkout, jangan dimasukkan ke kotak terlambat
+                // Jika sudah ada di tidak checkout, jangan dimasukkan ke kotak Terlambat
                 if (k && !tcMap[k]) {
                     uniqueTerlambat.push(item);
                 }
             });
 
             document.getElementById('count-tidak-checkout').innerText = uniqueTidakCheckout.length;
-            document.getElementById('count-terlambat').innerText = uniqueTerlambat.length;
+            document.getElementById('count-Terlambat').innerText = uniqueTerlambat.length;
 
             if (uniqueTidakCheckout.length > 0) {
                 // Dijadikan 1 kotak saja (single unified container)
@@ -9990,11 +10137,11 @@
                     'class="absensi-lw-option px-3 py-2 rounded-lg cursor-pointer transition flex items-center justify-between text-xs ' +
                     (isSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700') + '">' +
                     '<div>' +
-                        '<div class="font-bold text-slate-800">' + escapeHtml(lw.nama) + '</div>' +
-                        '<div class="text-[10px] text-slate-400 font-medium">NIP: ' + escapeHtml(nip) + (infoExtra ? ' • ' + escapeHtml(infoExtra) : '') + '</div>' +
+                    '<div class="font-bold text-slate-800">' + escapeHtml(lw.nama) + '</div>' +
+                    '<div class="text-[10px] text-slate-400 font-medium">NIP: ' + escapeHtml(nip) + (infoExtra ? ' • ' + escapeHtml(infoExtra) : '') + '</div>' +
                     '</div>' +
                     (isSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-                '</div>';
+                    '</div>';
             });
             dropdown.innerHTML = html;
         }
@@ -10089,6 +10236,11 @@
                 if (!card) return;
                 card.classList.remove('hidden');
                 initAddAbsensiDateDefault();
+                // Initialize time fields visibility based on default jenis BA
+                var jenisSelect = document.getElementById('absensi-add-jenis-ba');
+                if (jenisSelect) {
+                    toggleAbsensiTimeFields(jenisSelect.value);
+                }
                 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 var lwInput = document.getElementById('absensi-lw-search-input');
                 if (lwInput) {
@@ -10106,6 +10258,33 @@
             card.classList.add('hidden');
             var dropdown = document.getElementById('absensi-lw-dropdown-list');
             if (dropdown) dropdown.classList.add('hidden');
+            // Reset jenis BA to default
+            var jenisSelect = document.getElementById('absensi-add-jenis-ba');
+            if (jenisSelect) {
+                jenisSelect.selectedIndex = 0;
+                toggleAbsensiTimeFields(jenisSelect.value);
+            }
+        }
+
+        function toggleAbsensiTimeFields(jenisBA) {
+            var timeFields = document.getElementById('absensi-time-fields');
+            var jamMasuk = document.getElementById('absensi-add-jam-masuk');
+            var jamKeluar = document.getElementById('absensi-add-jam-keluar');
+
+            // Jenis yang TIDAK memerlukan jam masuk/keluar
+            var noTimeTypes = ['Inspeksi', 'Sosialisasi', 'Validasi', 'Lainnya'];
+
+            if (timeFields && jamMasuk && jamKeluar) {
+                if (noTimeTypes.includes(jenisBA)) {
+                    timeFields.classList.add('hidden');
+                    jamMasuk.removeAttribute('required');
+                    jamKeluar.removeAttribute('required');
+                } else {
+                    timeFields.classList.remove('hidden');
+                    jamMasuk.setAttribute('required', 'required');
+                    // jamKeluar optional for Absensi / COC
+                }
+            }
         }
 
         function focusAddAbsensiForm() {
@@ -10157,18 +10336,32 @@
 
             var selectedOpt = lwSelect ? lwSelect.options[lwSelect.selectedIndex] : null;
             if (!lwSelect || !lwSelect.value) {
-                showToast("Silakan pilih Line Walker terlebih dahulu!", true);
+                showToast("Silakan Pilih Petugas / Area terlebih dahulu!", true);
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Personil Absensi';
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Catatan';
                 return;
             }
 
             var dateVal = document.getElementById('absensi-add-tanggal').value;
             if (!dateVal) {
-                showToast("Silakan tentukan tanggal presensi!", true);
+                showToast("Silakan tentukan Tanggal Catatan!", true);
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Personil Absensi';
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Catatan';
                 return;
+            }
+
+            var jenisBA = document.getElementById('absensi-add-jenis-ba').value;
+            var noTimeTypes = ['Inspeksi', 'Sosialisasi', 'Validasi', 'Lainnya'];
+            var requiresTime = !noTimeTypes.includes(jenisBA);
+
+            if (requiresTime) {
+                var jamMasukVal = document.getElementById('absensi-add-jam-masuk').value;
+                if (!jamMasukVal) {
+                    showToast("Silakan isi Jam Mulai!", true);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Catatan';
+                    return;
+                }
             }
 
             var dateParts = dateVal.split('-');
@@ -10184,9 +10377,10 @@
                 tanggal: dayStr,
                 bulan: monthStr,
                 tahun: yearStr,
-                jamMasuk: document.getElementById('absensi-add-jam-masuk').value || '08:00',
-                jamKeluar: document.getElementById('absensi-add-jam-keluar').value || '-',
-                status: document.getElementById('absensi-add-status-select').value
+                jenisBA: jenisBA,
+                jamMasuk: requiresTime ? (document.getElementById('absensi-add-jam-masuk').value || '08:00') : '-',
+                jamKeluar: requiresTime ? (document.getElementById('absensi-add-jam-keluar').value || '-') : '-',
+                status: jenisBA
             };
 
             function onComplete(msg, isErr) {
@@ -10270,7 +10464,7 @@
                                 id: dayStr + "_tc_" + idx,
                                 nama: item.nama,
                                 nip: item.nip || "000000",
-                                status: "Tidak Absen Checkout",
+                                status: "Absensi / COC",
                                 jam: item.jamMasuk || "-",
                                 tanggal: dayStr,
                                 bulan: monthName,
@@ -10280,7 +10474,7 @@
                         }
                     });
 
-                    (dayData.terlambat || []).forEach(function (item, idx) {
+                    (dayData.Terlambat || []).forEach(function (item, idx) {
                         var k = (item.nama || '').trim().toUpperCase();
                         if (k && !tcMap[k]) {
                             currentWeeklyViolationsList.push({
@@ -10312,7 +10506,7 @@
             if (currentWeeklyViolationsList.length === 0) {
                 container.innerHTML = '<div class="text-center py-6 text-slate-400 text-xs italic bg-slate-50 rounded-xl border border-dashed border-slate-200">' +
                     '<i class="fa-solid fa-circle-check text-emerald-500 text-base mb-1 block"></i>' +
-                    'Tidak ada catatan pelanggaran absensi (terlambat / tidak checkout) pada periode M' + currentSelectedAbsensiWeek + ' (' + startDay + '-' + endDay + ').' +
+                    'Tidak ada catatan pelanggaran absensi (Terlambat / tidak checkout) pada periode M' + currentSelectedAbsensiWeek + ' (' + startDay + '-' + endDay + ').' +
                     '</div>';
                 return;
             }
@@ -10328,9 +10522,9 @@
 
                 card.className = "p-2.5 rounded-xl border transition flex items-center justify-between gap-3 " + cardBgClass;
 
-                var isTidakCheckout = (v.status === "Tidak Absen Checkout");
+                var isTidakCheckout = (v.status === "Absensi / COC");
                 var symbolHtml = isTidakCheckout
-                    ? '<span title="Tidak Absen Checkout" class="w-7 h-7 rounded-full bg-slate-950 text-white flex items-center justify-center text-xs shadow-xs shrink-0 ring-2 ring-slate-200 cursor-pointer">' +
+                    ? '<span title="Absensi / COC" class="w-7 h-7 rounded-full bg-slate-950 text-white flex items-center justify-center text-xs shadow-xs shrink-0 ring-2 ring-slate-200 cursor-pointer">' +
                     '<i class="fa-solid fa-right-from-bracket text-[10px]"></i>' +
                     '</span>'
                     : '<span title="Terlambat" class="w-7 h-7 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center text-xs shadow-xs shrink-0 ring-2 ring-amber-200 cursor-pointer">' +
@@ -10673,10 +10867,10 @@
                     h += '<div class="flex items-start gap-2 py-0.5 border-b border-slate-100/60 last:border-0">' +
                         '<div class="w-14 shrink-0 font-bold text-slate-700 text-[10px]">' + escapeHtml(dayNormalized) + '</div>' +
                         '<div class="text-slate-600 font-medium text-[10px] flex items-start gap-1 flex-1">' +
-                            '<span class="text-slate-400 select-none">•</span>' +
-                            '<span>' + formattedTowers + '</span>' +
+                        '<span class="text-slate-400 select-none">•</span>' +
+                        '<span>' + formattedTowers + '</span>' +
                         '</div>' +
-                    '</div>';
+                        '</div>';
                 }
                 h += '</div>';
                 return h;
@@ -10699,11 +10893,11 @@
 
                     htmlMulti += '<div class="bg-white p-2 rounded-xl border border-slate-200/90 shadow-2xs">' +
                         '<div class="flex items-center justify-between pb-1 mb-1 border-b border-slate-100">' +
-                            '<span class="font-black text-sky-800 text-[10px] flex items-center gap-1"><i class="fa-solid fa-calendar-check text-[9px] text-sky-500"></i> ' + escapeHtml(wTokens[w].label) + '</span>' +
-                            '<span class="text-[8px] font-bold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded-full">Inspeksi Siklus ' + (w + 1) + '/4</span>' +
+                        '<span class="font-black text-sky-800 text-[10px] flex items-center gap-1"><i class="fa-solid fa-calendar-check text-[9px] text-sky-500"></i> ' + escapeHtml(wTokens[w].label) + '</span>' +
+                        '<span class="text-[8px] font-bold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded-full">Inspeksi Siklus ' + (w + 1) + '/4</span>' +
                         '</div>' +
                         parseDays(wSubText) +
-                    '</div>';
+                        '</div>';
                 }
                 htmlMulti += '</div>';
                 return htmlMulti;
@@ -10712,13 +10906,13 @@
             // Jika input harian biasa: tampilkan rute siklus mingguan dengan status 4x inspeksi
             return '<div class="space-y-2">' +
                 '<div class="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs">' +
-                    '<div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-slate-100">' +
-                        '<span class="font-black text-sky-800 text-[11px] flex items-center gap-1.5"><i class="fa-solid fa-route text-sky-600 text-xs"></i> Rute Jadwal Inspeksi</span>' +
-                        '<span class="text-[9px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full"><i class="fa-solid fa-rotate text-[8px] mr-0.5"></i> 4x Inspeksi / Bulan (M1 - M4)</span>' +
-                    '</div>' +
-                    parseDays(raw) +
+                '<div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-slate-100">' +
+                '<span class="font-black text-sky-800 text-[11px] flex items-center gap-1.5"><i class="fa-solid fa-route text-sky-600 text-xs"></i> Rute Jadwal Inspeksi</span>' +
+                '<span class="text-[9px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full"><i class="fa-solid fa-rotate text-[8px] mr-0.5"></i> 4x Inspeksi / Bulan (M1 - M4)</span>' +
                 '</div>' +
-            '</div>';
+                parseDays(raw) +
+                '</div>' +
+                '</div>';
         }
 
         var currentSelectedRequestDetail = null;
@@ -10810,24 +11004,24 @@
                 div.className = "clean-card p-3.5 space-y-2";
                 div.innerHTML = '<div class="flex items-center justify-between border-b border-slate-100 pb-1.5">' +
                     '<div>' +
-                        '<span class="font-mono text-sky-700 font-bold text-xs">' + item.idRequest + '</span>' +
-                        '<h4 class="font-black text-slate-900 text-xs mt-0.5 cursor-pointer hover:text-cyan-600 flex items-center gap-1.5 group" ' +
-                            'onclick="openDetailRequestModal(JSON.parse(decodeURIComponent(\'' + encodedItem + '\')))" title="Klik untuk lihat detail & salin">' +
-                            '<span>' + item.nama + '</span>' +
-                            '<i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-400 group-hover:text-cyan-600 transition"></i>' +
-                        '</h4>' +
+                    '<span class="font-mono text-sky-700 font-bold text-xs">' + item.idRequest + '</span>' +
+                    '<h4 class="font-black text-slate-900 text-xs mt-0.5 cursor-pointer hover:text-cyan-600 flex items-center gap-1.5 group" ' +
+                    'onclick="openDetailRequestModal(JSON.parse(decodeURIComponent(\'' + encodedItem + '\')))" title="Klik untuk lihat detail & salin">' +
+                    '<span>' + item.nama + '</span>' +
+                    '<i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-400 group-hover:text-cyan-600 transition"></i>' +
+                    '</h4>' +
                     '</div>' +
                     statusBadge + '</div>' +
                     '<div class="flex items-center justify-between text-[11px]">' +
-                        '<div class="text-slate-700 font-bold">Bulan Perubahan: <span class="text-sky-700 font-black">' + item.bulanTarget + '</span></div>' +
-                        '<button type="button" onclick="openDetailRequestModal(JSON.parse(decodeURIComponent(\'' + encodedItem + '\')))" ' +
-                            'class="text-[10px] font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 px-2 py-0.5 rounded-md flex items-center gap-1 active:scale-95 transition">' +
-                            '<i class="fa-solid fa-eye text-[9px]"></i> Detail & Salin' +
-                        '</button>' +
+                    '<div class="text-slate-700 font-bold">Bulan Perubahan: <span class="text-sky-700 font-black">' + item.bulanTarget + '</span></div>' +
+                    '<button type="button" onclick="openDetailRequestModal(JSON.parse(decodeURIComponent(\'' + encodedItem + '\')))" ' +
+                    'class="text-[10px] font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 px-2 py-0.5 rounded-md flex items-center gap-1 active:scale-95 transition">' +
+                    '<i class="fa-solid fa-eye text-[9px]"></i> Detail & Salin' +
+                    '</button>' +
                     '</div>' +
                     '<div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 cursor-pointer hover:border-sky-300 transition" ' +
-                        'onclick="openDetailRequestModal(JSON.parse(decodeURIComponent(\'' + encodedItem + '\')))">' +
-                        formatScheduleDetailHTML(item.detailPerubahan) +
+                    'onclick="openDetailRequestModal(JSON.parse(decodeURIComponent(\'' + encodedItem + '\')))">' +
+                    formatScheduleDetailHTML(item.detailPerubahan) +
                     '</div>';
                 container.appendChild(div);
             });
@@ -11081,11 +11275,11 @@
                     'class="req-lw-option px-3 py-2 rounded-lg cursor-pointer transition flex items-center justify-between text-xs ' +
                     (isSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700') + '">' +
                     '<div>' +
-                        '<div class="font-bold text-slate-800">' + escapeHtml(lw.nama) + '</div>' +
-                        '<div class="text-[10px] text-slate-400 font-medium">NIP: ' + escapeHtml(nip) + (infoExtra ? ' • ' + escapeHtml(infoExtra) : '') + '</div>' +
+                    '<div class="font-bold text-slate-800">' + escapeHtml(lw.nama) + '</div>' +
+                    '<div class="text-[10px] text-slate-400 font-medium">NIP: ' + escapeHtml(nip) + (infoExtra ? ' • ' + escapeHtml(infoExtra) : '') + '</div>' +
                     '</div>' +
                     (isSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-                '</div>';
+                    '</div>';
             });
             dropdown.innerHTML = html;
         }
@@ -14725,7 +14919,7 @@
                 (isAllSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold') + '">' +
                 '<div class="flex items-center gap-1.5"><i class="fa-solid fa-users text-[10px] text-slate-400"></i><span>Semua KLW</span></div>' +
                 (isAllSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-            '</div>';
+                '</div>';
 
             if (filtered.length === 0) {
                 html += '<div class="p-2.5 text-center text-slate-400 text-xs font-semibold"><i class="fa-solid fa-circle-exclamation mr-1 text-slate-300"></i> Tidak ada KLW yang cocok</div>';
@@ -14738,7 +14932,7 @@
                         (isSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700') + '">' +
                         '<div class="font-bold text-slate-800">' + escapeHtml(klw) + '</div>' +
                         (isSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-                    '</div>';
+                        '</div>';
                 });
             }
             dropdown.innerHTML = html;
@@ -14845,7 +15039,7 @@
                 (isAllSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold') + '">' +
                 '<div class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-[10px] text-slate-400"></i><span>Semua Gardu Induk</span></div>' +
                 (isAllSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-            '</div>';
+                '</div>';
 
             if (filtered.length === 0) {
                 html += '<div class="p-2.5 text-center text-slate-400 text-xs font-semibold"><i class="fa-solid fa-circle-exclamation mr-1 text-slate-300"></i> Tidak ada Gardu Induk yang cocok</div>';
@@ -14858,7 +15052,7 @@
                         (isSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700') + '">' +
                         '<div class="font-bold text-slate-800">' + escapeHtml(gi) + '</div>' +
                         (isSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-                    '</div>';
+                        '</div>';
                 });
             }
             dropdown.innerHTML = html;
@@ -14965,7 +15159,7 @@
                 (isAllSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold') + '">' +
                 '<div class="flex items-center gap-1.5"><i class="fa-solid fa-tower-broadcast text-[10px] text-slate-400"></i><span>Semua Penghantar</span></div>' +
                 (isAllSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-            '</div>';
+                '</div>';
 
             if (filtered.length === 0) {
                 html += '<div class="p-2.5 text-center text-slate-400 text-xs font-semibold"><i class="fa-solid fa-circle-exclamation mr-1 text-slate-300"></i> Tidak ada Penghantar yang cocok</div>';
@@ -14978,7 +15172,7 @@
                         (isSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700') + '">' +
                         '<div class="font-bold text-slate-800 truncate" title="' + escapeHtml(p) + '">' + escapeHtml(p) + '</div>' +
                         (isSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-                    '</div>';
+                        '</div>';
                 });
             }
             dropdown.innerHTML = html;
@@ -15089,11 +15283,11 @@
                 'class="tower-lw-option px-3 py-2 rounded-lg cursor-pointer transition flex items-center justify-between text-xs ' +
                 (isAllSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700 font-semibold') + '">' +
                 '<div class="flex items-center gap-1.5">' +
-                    '<i class="fa-solid fa-users text-[10px] text-slate-400"></i>' +
-                    '<span>Semua Line Walker</span>' +
+                '<i class="fa-solid fa-users text-[10px] text-slate-400"></i>' +
+                '<span>Semua Line Walker</span>' +
                 '</div>' +
                 (isAllSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-            '</div>';
+                '</div>';
 
             if (filtered.length === 0) {
                 html += '<div class="p-2.5 text-center text-slate-400 text-xs font-semibold"><i class="fa-solid fa-circle-exclamation mr-1 text-slate-300"></i> Tidak ada Line Walker yang cocok</div>';
@@ -15110,11 +15304,11 @@
                         'class="tower-lw-option px-3 py-2 rounded-lg cursor-pointer transition flex items-center justify-between text-xs ' +
                         (isSelected ? 'bg-cyan-50 text-cyan-800 font-bold' : 'hover:bg-slate-50 text-slate-700') + '">' +
                         '<div>' +
-                            '<div class="font-bold text-slate-800">' + escapeHtml(lw.nama) + '</div>' +
-                            '<div class="text-[10px] text-slate-400 font-medium">NIP: ' + escapeHtml(nip) + (infoExtra ? ' • ' + escapeHtml(infoExtra) : '') + '</div>' +
+                        '<div class="font-bold text-slate-800">' + escapeHtml(lw.nama) + '</div>' +
+                        '<div class="text-[10px] text-slate-400 font-medium">NIP: ' + escapeHtml(nip) + (infoExtra ? ' • ' + escapeHtml(infoExtra) : '') + '</div>' +
                         '</div>' +
                         (isSelected ? '<i class="fa-solid fa-check text-xs text-cyan-600 shrink-0"></i>' : '') +
-                    '</div>';
+                        '</div>';
                 });
             }
             dropdown.innerHTML = html;
