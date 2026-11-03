@@ -40,6 +40,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
         /* Leaflet Z-Index Safety & Custom Tower Pin */
         .leaflet-pane {
             z-index: 10 !important;
@@ -55,8 +57,6 @@
             align-items: center;
             justify-content: center;
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
         :root {
             --bg-main: #f8fafc;
@@ -5751,6 +5751,8 @@
                                     headers: { "Accept": "application/json" }
                                 });
                             }
+
+                            fetchPromise
                                 .then(function (res) {
                                     if (!res.ok) throw new Error("HTTP " + res.status);
                                     return res.json();
